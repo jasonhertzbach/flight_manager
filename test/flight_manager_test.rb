@@ -25,4 +25,16 @@ class FlightManagerTest < Minitest::Test
                    { flight_number: 'YH1732', origin: 'PAR', destination: 'JFK' }
                  ], flights)
   end
+
+  def test_direction_sensitive
+    @flight_manager.add_new_flight('LO1533', 'WAW', 'MUC')
+    @flight_manager.add_new_flight('LH1232', 'JFK', 'PAR')
+    @flight_manager.add_new_flight('YH1732', 'PAR', 'JFK')
+
+    flights = @flight_manager.find_flights_between 'JFK', 'PAR', true
+
+    assert_equal([
+                   { flight_number: 'LH1232', origin: 'JFK', destination: 'PAR' }
+                 ], flights)
+  end
 end

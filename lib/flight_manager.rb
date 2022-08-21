@@ -18,7 +18,11 @@ class FlightManager
     flights = []
     @flight_storage.each do |f|
       if f.include?(origin) && f.include?(destination)
-        flights << {flight_number: f[0], origin: f[1], destination: f[2]}
+        if direction_sensitive
+          flights << {flight_number: f[0], origin: f[1], destination: f[2]} if origin == f[1] && destination == f[2]
+        else
+          flights << {flight_number: f[0], origin: f[1], destination: f[2]}
+        end
       end
     end
     flights
